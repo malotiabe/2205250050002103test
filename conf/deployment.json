@@ -1,0 +1,402 @@
+{
+   "default": {
+      "jobs": [
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_start": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_success": [
+                  "anders.blankholm@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 1,
+            "name": "promotheus-preprocess",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS15_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "DATABRICKS_HOST": "https://adb-7627893052593350.10.azuredatabricks.net",
+                  "DATABRICKS_TOKEN": "dapi1d1a453bd7a4ca75b89354e5fd5a5ce0",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--first_week_start_date",
+                  "20181015",
+                  "--last_week_start_date",
+                  "20210906",
+                  "--serve",
+                  "false"
+               ],
+               "python_file": "pipeline/run_preprocessing.py"
+            }
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_start": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_success": [
+                  "anders.blankholm@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 1,
+            "name": "promotheus-train",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS15_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "DATABRICKS_HOST": "https://adb-7627893052593350.10.azuredatabricks.net",
+                  "DATABRICKS_TOKEN": "dapi1d1a453bd7a4ca75b89354e5fd5a5ce0",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--end_date",
+                  "20180101",
+                  "--model_usage",
+                  "serve",
+                  "--n_estimators",
+                  "5",
+                  "--n_weeks_data_training",
+                  "5",
+                  "--tracking_uri",
+                  "databricks"
+               ],
+               "python_file": "pipeline/run_train.py"
+            }
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_start": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_success": [
+                  "anders.blankholm@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 0,
+            "name": "promotheus-optimise_forecast",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS15_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "DATABRICKS_HOST": "https://adb-7627893052593350.10.azuredatabricks.net",
+                  "DATABRICKS_TOKEN": "dapi1d1a453bd7a4ca75b89354e5fd5a5ce0",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--recommend_for_date",
+                  "20220124",
+                  "--model_run_id",
+                  "c854485367d64f919d8dfcfd9ddfb790",
+                  "--minutes_in_promo",
+                  "10080"
+               ],
+               "python_file": "pipeline/run_forecast_optimize.py"
+            }
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_start": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_success": [
+                  "anders.blankholm@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 0,
+            "name": "promotheus-ithaxinate",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS15_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "DATABRICKS_HOST": "https://adb-7627893052593350.10.azuredatabricks.net",
+                  "DATABRICKS_TOKEN": "dapi1d1a453bd7a4ca75b89354e5fd5a5ce0",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--recommend_for_date",
+                  "20180101"
+               ],
+               "python_file": "pipeline/run_ithax.py"
+            }
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_start": [
+                  "anders.blankholm@asos.com"
+               ],
+               "on_success": [
+                  "anders.blankholm@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 0,
+            "name": "promotheus-serve",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS15_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "DATABRICKS_HOST": "https://adb-7627893052593350.10.azuredatabricks.net",
+                  "DATABRICKS_TOKEN": "dapi1d1a453bd7a4ca75b89354e5fd5a5ce0",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--recommend_for_date",
+                  "20180101"
+               ],
+               "python_file": "pipeline/run_serve_recommendations.py"
+            }
+         },
+         {
+            "max_concurrent_runs": 50,
+            "max_retries": 0,
+            "name": "promotheus-test",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS15_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "DATABRICKS_HOST": "https://adb-7627893052593350.10.azuredatabricks.net",
+                  "DATABRICKS_TOKEN": "dapi1d1a453bd7a4ca75b89354e5fd5a5ce0",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "dev"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [ ],
+               "python_file": "tests/integration/remote_suite.py"
+            },
+            "timeout_seconds": 4200
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "michael.neely@asos.com"
+               ],
+               "on_start": [
+                  "michael.neely@asos.com"
+               ],
+               "on_success": [
+                  "michael.neely@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 0,
+            "name": "promotheus-stakeholder-metrics",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS12_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--promo_date",
+                  "20220502"
+               ],
+               "python_file": "promotheus/monitoring/run_stakeholder_metrics.py"
+            }
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "michael.neely@asos.com"
+               ],
+               "on_start": [
+                  "michael.neely@asos.com"
+               ],
+               "on_success": [
+                  "michael.neely@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 0,
+            "name": "promotheus-populate-predictions",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS12_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--first_date",
+                  "20220328",
+                  "--last_date",
+                  "20220403"
+               ],
+               "python_file": "promotheus/monitoring/run_populate_predictions.py"
+            }
+         },
+         {
+            "email_notifications": {
+               "on_failure": [
+                  "michael.neely@asos.com"
+               ],
+               "on_start": [
+                  "michael.neely@asos.com"
+               ],
+               "on_success": [
+                  "michael.neely@asos.com"
+               ]
+            },
+            "libraries": [ ],
+            "max_concurrent_runs": 20,
+            "max_retries": 0,
+            "name": "promotheus-compute-metrics",
+            "new_cluster": {
+               "custom_tags": {
+                  "ResourceClass": "SingleNode"
+               },
+               "node_type_id": "Standard_DS13_v2",
+               "num_workers": 0,
+               "spark_conf": {
+                  "spark.databricks.cluster.profile": "singleNode",
+                  "spark.databricks.clusterUsageTags.clusterNoDriverDaemon": "true",
+                  "spark.master": "local[*, 4]"
+               },
+               "spark_env_vars": {
+                  "ASOS_AI_RETSCI_KEY": "9e31eGFfcLXQx8M~hRiTE_A-4qp6E4G_eU",
+                  "PIP_EXTRA_INDEX_URL": "https://Packages:cspmfjepj5zqyhdqmsb55xyvaibgsd364gyt45rgvs7w5eaw2bba@pkgs.dev.azure.com/asos/_packaging/Packages/pypi/simple",
+                  "PROMOTHEUS_ENV": "np"
+               },
+               "spark_version": "10.1.x-cpu-ml-scala2.12"
+            },
+            "spark_python_task": {
+               "parameters": [
+                  "--first_date",
+                  "20220328",
+                  "--last_date",
+                  "20220328"
+               ],
+               "python_file": "promotheus/monitoring/run_compute_metrics.py"
+            }
+         }
+      ]
+   }
+}

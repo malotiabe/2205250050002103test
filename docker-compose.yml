@@ -1,0 +1,141 @@
+version: "3.7"
+
+# TODO: Explicitly pass env vars in environment: section instead of injecting indiscriminately from .env file
+# TODO: Don't hardcode registry name
+
+services: 
+  databricks:
+    image: asnpairetsciacr.azurecr.io/promotheus/databricks:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: promotheus-databricks
+      args:
+        - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+        - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+        - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+    env_file: .env
+    volumes: 
+      - type: bind
+        source: ./
+        target: /mnt/src
+    environment: 
+      - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+      - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+      - PROMOTHEUS_ENV=${PROMOTHEUS_ENV}
+
+
+  base:
+    image: asnpairetsciacr.azurecr.io/promotheus/base:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: promotheus-base
+      args:
+        - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+        - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+        - DATABRICKS_HOST=${DATABRICKS_HOST}
+        - DATABRICKS_TOKEN=${DATABRICKS_TOKEN}
+    env_file: .env
+    working_dir: /mnt/src
+    volumes: 
+      - type: bind
+        source: ./
+        target: /mnt/src
+    environment: 
+      - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+      - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+      - PROMOTHEUS_ENV=${PROMOTHEUS_ENV}
+      # - DATABRICKS_CLUSTER_ID=${DATABRICKS_CLUSTER_ID} Not currently in use
+
+
+  shell:
+    image: asnpairetsciacr.azurecr.io/promotheus/shell:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: promotheus-shell
+      args:
+        - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+        - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+        - DATABRICKS_HOST=${DATABRICKS_HOST}
+        - DATABRICKS_TOKEN=${DATABRICKS_TOKEN}
+    env_file: .env
+    working_dir: /mnt/src
+    volumes: 
+      - type: bind
+        source: ./
+        target: /mnt/src
+    environment: 
+      - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+      - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+      - PROMOTHEUS_ENV=${PROMOTHEUS_ENV}
+      # - DATABRICKS_CLUSTER_ID=${DATABRICKS_CLUSTER_ID} Not currently in use
+
+
+  dev: 
+    command: zsh
+    image: asnpairetsciacr.azurecr.io/promotheus/dev:latest
+    build: 
+      context: .
+      dockerfile:  ./Dockerfile
+      target: promotheus-dev
+      args:
+        - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+        - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+        - DATABRICKS_HOST=${DATABRICKS_HOST}
+        - DATABRICKS_TOKEN=${DATABRICKS_TOKEN}
+        - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+    env_file:
+      - .env
+    working_dir: /mnt/src
+    volumes: 
+      - type: bind
+        source: ./
+        target: /mnt/src
+    environment:
+        - ASOS_INDEX_URL=${ASOS_INDEX_URL}
+        - ASOS_AI_RETSCI_KEY=${ASOS_AI_RETSCI_KEY}
+        - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+        - DATABRICKS_HOST=${DATABRICKS_HOST}
+        - DATABRICKS_TOKEN=${DATABRICKS_TOKEN}
+        - PROMOTHEUS_ENV=${PROMOTHEUS_ENV}
+
+
+  jupyter:
+    extends: dev
+    command: jupyter notebook --ip=0.0.0.0 --port=9001 --no-browser --allow-root
+    ports:
+      - 9001:9001
+
+
+# Repo isn;t ready for this
+  # lint:
+  #   extends: shell
+  #   command: pylint
+
+
+  tests:
+    extends: shell
+    command: pytest -vvv /mnt/src/tests/
+
+
+  unit-tests:
+    extends: shell
+    command: pytest -vvv /mnt/src/tests/unit/
+
+
+  remote-integration-tests:
+    extends: shell
+    command: bash ./tests/remote.sh
+
+  inspect-environment:
+    extends: shell
+    command: cat /root/.databrickscfg
+
+  local-integration-tests:
+    extends: shell
+    command: python tests/integration/remote_suite.py
