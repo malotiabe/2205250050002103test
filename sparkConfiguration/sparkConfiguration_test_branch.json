@@ -1,0 +1,14 @@
+{
+	"name": "sparkConfiguration_test_branch",
+	"properties": {
+		"configs": {
+			"spark.decommission.enabled": "true"
+		},
+		"created": "2024-05-27T15:48:38.5240000+03:00",
+		"createdBy": "malotiabe@microsoft.com",
+		"annotations": [],
+		"configMergeRule": {
+			"artifact.currentOperation.spark.decommission.enabled": "replace"
+		}
+	}
+}
