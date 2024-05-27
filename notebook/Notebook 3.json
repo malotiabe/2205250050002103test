@@ -1,5 +1,5 @@
 {
-	"name": "Test",
+	"name": "Notebook 3",
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -8,17 +8,16 @@
 			"type": "BigDataPoolReference"
 		},
 		"sessionProperties": {
-			"driverMemory": "56g",
-			"driverCores": 8,
-			"executorMemory": "56g",
-			"executorCores": 8,
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
 			"numExecutors": 2,
-			"runAsWorkspaceSystemIdentity": false,
 			"conf": {
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d2bec3c2-1c4f-4ee5-9e3c-a72e18488786"
+				"spark.autotune.trackingId": "fd666c8d-e543-4043-bab2-b36e21297bc5"
 			}
 		},
 		"metadata": {
@@ -52,7 +51,7 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"print(\"hi\")"
+					"print(spark.conf.get(\"spark.log.level\"))"
 				],
 				"execution_count": 1
 			}
