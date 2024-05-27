@@ -1,0 +1,61 @@
+{
+	"name": "Notebook 2",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark34testpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "c1a1e1e3-6e25-4164-8778-ab3357c65482"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/b3be1524-44b3-4038-a3a4-2a181b1a28f7/resourceGroups/synapse_test/providers/Microsoft.Synapse/workspaces/uksouthtestmir/bigDataPools/spark34testpool",
+				"name": "spark34testpool",
+				"type": "Spark",
+				"endpoint": "https://uksouthtestmir.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark34testpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 10,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"%run Test {}"
+				],
+				"execution_count": 3
+			}
+		]
+	}
+}
