@@ -1,0 +1,14 @@
+{
+	"name": "sparkConfiguration2",
+	"properties": {
+		"configs": {
+			"spark.log.level": "INFO"
+		},
+		"created": "2024-05-27T11:50:34.7010000+03:00",
+		"createdBy": "malotiabe@microsoft.com",
+		"annotations": [],
+		"configMergeRule": {
+			"artifact.currentOperation.spark.log.level": "replace"
+		}
+	}
+}
