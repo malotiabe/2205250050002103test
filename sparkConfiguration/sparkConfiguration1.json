@@ -2,9 +2,9 @@
 	"name": "sparkConfiguration1",
 	"properties": {
 		"configs": {
-			"spark.log.level": "DEBUG"
+			"spark.log.level": "TRACE"
 		},
-		"created": "2024-05-27T11:43:08.8870000+03:00",
+		"created": "2024-05-27T12:06:23.8920000+03:00",
 		"createdBy": "malotiabe@microsoft.com",
 		"annotations": [],
 		"configMergeRule": {
