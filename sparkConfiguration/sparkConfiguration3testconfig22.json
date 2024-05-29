@@ -1,0 +1,14 @@
+{
+	"name": "sparkConfiguration3testconfig22",
+	"properties": {
+		"configs": {
+			"spark.barrier.sync.timeout": "400d"
+		},
+		"created": "2024-05-29T18:31:15.8870000+03:00",
+		"createdBy": "malotiabe@microsoft.com",
+		"annotations": [],
+		"configMergeRule": {
+			"artifact.currentOperation.spark.barrier.sync.timeout": "replace"
+		}
+	}
+}
