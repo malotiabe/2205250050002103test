@@ -1,0 +1,14 @@
+{
+	"name": "sparkConfiguration3test",
+	"properties": {
+		"configs": {
+			"spark.acls.enable": "true"
+		},
+		"created": "2024-05-29T17:06:52.7200000+03:00",
+		"createdBy": "malotiabe@microsoft.com",
+		"annotations": [],
+		"configMergeRule": {
+			"artifact.currentOperation.spark.acls.enable": "replace"
+		}
+	}
+}
