@@ -1,0 +1,60 @@
+{
+	"name": "Notebook 5",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "testpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "899edf8b-739e-45e6-86c5-1fe06f26f4b5"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/b3be1524-44b3-4038-a3a4-2a181b1a28f7/resourceGroups/synapse_test/providers/Microsoft.Synapse/workspaces/uksouthtestmir/bigDataPools/testpool",
+				"name": "testpool",
+				"type": "Spark",
+				"endpoint": "https://uksouthtestmir.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.3",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"mssparkutils.credentials.getSecret('SPexternaltable','SPsecret','AzureKeyVault1')"
+				],
+				"execution_count": 2
+			}
+		]
+	}
+}
